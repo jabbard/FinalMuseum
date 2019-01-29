@@ -22,7 +22,7 @@ namespace FCBarcelonaMuseum
             LoadGrid();
         }
 
-        public void ToCSV(String data)
+        private void ToCSV(String data)
         {
             String path = @"Data.csv";
             if (!File.Exists(path))
@@ -42,156 +42,150 @@ namespace FCBarcelonaMuseum
             {
                 Regex rx = new Regex(@"^98*([0-9]{8})$");
                 Regex rgx = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-                
-                
-                if ((!rx.IsMatch(txtPhNo.Text) || String.IsNullOrEmpty(txtPhNo.Text.Trim())) || cmbOccupation.SelectedText.Equals("Select an occupation") || (!rgx.IsMatch(txtEmail.Text) || String.IsNullOrEmpty(txtEmail.Text.Trim())))
+                Regex name = new Regex(@"^\w+\s\w+\s?\w+$");
+
+                int cardNo = 0;
+                    
+                String path = @"Data.csv";
+                if (!File.Exists(path))
                 {
-                    MessageBox.Show("Please enter the correct data.", "Error!");
-                    btnClearAll.PerformClick();
+                    File.Create(path);
+                }
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    String line = "";
+                    if (File.Exists(@"Data.csv"))
+                    {
+                        int[] cN = new int[dataGridTable.RowCount];
+                        int counter = 0;
+                        while (!reader.EndOfStream)
+                        {
+                            line = reader.ReadLine();
+                            String[] rowData = line.Split(',');
+                            cardNo = int.Parse(rowData[0]);
+                            cN[counter] = int.Parse(rowData[0]);
+                            counter++;
+                        }
+                        int greatest = 0;
+                        for(int i =0; i<cN.Length; i++)
+                        {
+                            if (cN[i] > greatest)
+                            {
+                                greatest = cN[i];
+                            }
+                        }
+                        if (cardNo >= greatest)
+                        {
+                            cardNo = ++cardNo;
+                        }
+                        else
+                        {
+                            cardNo = greatest + 1;
+                        }
+                            
+                    }
+
+                }
+                String visitorName;
+                if (String.IsNullOrEmpty(txtName.Text.Trim()) || !rgx.IsMatch(txtName.Text.Trim()))
+                {
+                    MessageBox.Show("The name field is empty!","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
                 else
                 {
-                    int cardNo = 0;
-                    
-                    String path = @"Data.csv";
-                    if (!File.Exists(path))
-                    {
-                        File.Create(path);
-                    }
-                    using (StreamReader reader = new StreamReader(path))
-                    {
-                        String line = "";
-                        if (File.Exists(@"Data.csv"))
-                        {
-                            int[] cN = new int[dataGridTable.RowCount];
-                            int counter = 0;
-                            while (!reader.EndOfStream)
-                            {
-                                line = reader.ReadLine();
-                                String[] rowData = line.Split(',');
-                                cardNo = int.Parse(rowData[0]);
-                                cN[counter] = int.Parse(rowData[0]);
-                                counter++;
-                            }
-                            int greatest = 0;
-                            for(int i =0; i<cN.Length; i++)
-                            {
-                                if (cN[i] > greatest)
-                                {
-                                    greatest = cN[i];
-                                }
-                            }
-                            if (cardNo >= greatest)
-                            {
-                                cardNo = ++cardNo;
-                            }
-                            else
-                            {
-                                cardNo = greatest + 1;
-                            }
-                            
-                        }
-
-                    }
-                    String visitorName;
-                    if (String.IsNullOrEmpty(txtName.Text.Trim()))
-                    {
-                        MessageBox.Show("The name field is empty!","Error!");
-                        return;
-                    }
-                    else
-                    {
-                        visitorName = txtName.Text.Trim();
-                    }
-                    String email;
-                    if (String.IsNullOrEmpty(txtEmail.Text.Trim()))
-                    {
-                        MessageBox.Show("The name field is empty!","Error!");
-                        return;
-                    }
-                    else
-                    {
-                        email = txtEmail.Text.Trim();
-                    }
-                    String occupation;
-                    if(cmbOccupation.SelectedItem==null)
-                    {
-                        MessageBox.Show("Please select an occupation","Error!");
-                        btnClearAll.PerformClick();
-                        return; 
-                    } else
-                    {
-                        occupation = cmbOccupation.Text;
-                    }
-
-                    String gender;
-
-                    if (radMale.Checked)
-                    {
-                        gender = radMale.Text;
-                    }
-                    else
-                    {
-                        gender = radFemale.Text;
-                    }
-                    
-                    DateTime inTime = DateTime.Now;
-                    DateTime outTime = default(DateTime);
-                    TimeSpan opens = new TimeSpan(10, 0, 0);
-                    TimeSpan closes = new TimeSpan(17, 0, 0);
-                    DayOfWeek day = inTime.DayOfWeek;
-                    //if (day == DayOfWeek.Saturday || day == DayOfWeek.Sunday)
-                    //{
-                    //    MessageBox.Show("The museum is closed.");
-                    //    btnClearAll.PerformClick();
-                    //    return;
-                    //}
-                    //else if (inTime.TimeOfDay > opens && inTime.TimeOfDay < closes)
-                    //{
-                        
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("The musuem is now close, please visit between 10 AM and 5 PM");
-                    //    btnClearAll.PerformClick();
-                    //    return;
-                    //}
-
-                    String phNo;
-                    if (String.IsNullOrEmpty(txtPhNo.Text.Trim()))
-                    {
-                        MessageBox.Show("The name field is empty!","Error!");
-                        return;
-                    }
-                    else
-                    {
-                        phNo = txtPhNo.Text.Trim();
-                    }
-                    int check = ValidateRedundancy(visitorName, phNo, occupation, gender, email);
-                    if(check == 0)
-                    {
-                        MessageBox.Show("This is an old user.","Error!");
-                        return;
-                    }
-                    Visitors visitors = new Visitors(cardNo, visitorName, phNo, email, occupation, gender, inTime, outTime, day);
-                    LsVisitors.Add(visitors);
-                    String data = cardNo + "," + visitorName + "," + phNo + "," + email + "," + occupation + "," + gender + "," + inTime + "," + outTime + "," + day;
-                    ToCSV(data);
-                    LoadGrid();
-                   
+                    visitorName = txtName.Text.Trim();
                 }
+                String email;
+                if (String.IsNullOrEmpty(txtEmail.Text.Trim()) || !name.IsMatch(txtEmail.Text.Trim()))
+                {
+                    MessageBox.Show("The email field is empty!","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    email = txtEmail.Text.Trim();
+                }
+                String occupation;
+                if(cmbOccupation.SelectedItem==null)
+                {
+                    MessageBox.Show("Please select an occupation","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    btnClearAll.PerformClick();
+                    return; 
+                } else
+                {
+                    occupation = cmbOccupation.Text;
+                }
+
+                String gender;
+
+                if (radMale.Checked)
+                {
+                    gender = radMale.Text;
+                }
+                else
+                {
+                    gender = radFemale.Text;
+                }
+                    
+                DateTime inTime = DateTime.Now;
+                DateTime outTime = default(DateTime);
+                TimeSpan opens = new TimeSpan(10, 0, 0);
+                TimeSpan closes = new TimeSpan(17, 0, 0);
+                DayOfWeek day = inTime.DayOfWeek;
+                //if (day == DayOfWeek.Saturday || day == DayOfWeek.Sunday)
+                //{
+                //    MessageBox.Show("The museum is closed.");
+                //    btnClearAll.PerformClick();
+                //    return;
+                //}
+                //else if (inTime.TimeOfDay > opens && inTime.TimeOfDay < closes)
+                //{
+                        
+                //}
+                //else
+                //{
+                //    MessageBox.Show("The musuem is now close, please visit between 10 AM and 5 PM");
+                //    btnClearAll.PerformClick();
+                //    return;
+                //}
+
+                String phNo;
+                if (String.IsNullOrEmpty(txtPhNo.Text.Trim()) || !rx.IsMatch(txtEmail.Text.Trim()))
+                {
+                    MessageBox.Show("The name field is empty!","Error!",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    phNo = txtPhNo.Text.Trim();
+                }
+                int check = ValidateRedundancy(visitorName, phNo, occupation, gender, email);
+                if(check == 0)
+                {
+                    MessageBox.Show("This is an old visitor.","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    btnClearAll.PerformClick();
+                    return;
+                }
+                Visitors visitors = new Visitors(cardNo, visitorName, phNo, email, occupation, gender, inTime, outTime, day);
+                LsVisitors.Add(visitors);
+                String data = cardNo + "," + visitorName + "," + phNo + "," + email + "," + occupation + "," + gender + "," + inTime + "," + outTime + "," + day;
+                ToCSV(data);
+                LoadGrid();
+                MessageBox.Show("The visitor has been registered and checked in with card no."+cardNo+".", "Alert!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
 
 
             }
             catch (Exception f)
             {
-                MessageBox.Show("The values entered are either missing or incorrect!", "Error!");
+                MessageBox.Show("The values entered are either missing or incorrect!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
         }
 
-        public int ValidateRedundancy(String name, String phone, String occupation, String gender, String email)
+        private int ValidateRedundancy(String name, String phone, String occupation, String gender, String email)
         {
             int value = 1;
             foreach(Visitors v in LsVisitors)
@@ -204,7 +198,7 @@ namespace FCBarcelonaMuseum
             return value;
         }
         
-        public void LoadGrid()
+        private void LoadGrid()
         {
             try
             {
@@ -266,12 +260,6 @@ namespace FCBarcelonaMuseum
             radMale.Checked = true;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            cmbOccupation.SelectedItem = null;
-            cmbOccupation.SelectedText = "Select an occupation";
-        }
-
         private void BtnCheckIn_Click(object sender, EventArgs e)
         {
             try
@@ -299,7 +287,7 @@ namespace FCBarcelonaMuseum
                         txtCardNo.Text = "";
                     } else if (v.CardNo == cardNo && v.OutTime.Equals(default(DateTime)))
                     {
-                        MessageBox.Show("This user has not exited previously.","Error!");
+                        MessageBox.Show("This visitor has not exited previously.","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         txtCardNo.Text = "";
                         return;
                     }
@@ -308,10 +296,11 @@ namespace FCBarcelonaMuseum
                 LsVisitors.Add(visit);
                 String data = cNo + "," + name + "," + phNo + "," + email + "," + occupation + "," + gender + "," + inTime + "," + outTime + "," + day;
                 ToCSV(data);
+                MessageBox.Show("The visitor has checked in.", "Info!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadGrid();
             } catch (Exception a)
             {
-                MessageBox.Show("Enter correct value!","Error!");
+                MessageBox.Show("Enter correct value!","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtCardNo.Text = "";
             }
         }
@@ -325,22 +314,31 @@ namespace FCBarcelonaMuseum
                 String[] lines = File.ReadAllLines(@"Data.csv");
                 using (StreamWriter writer = new StreamWriter(@"Data.csv"))
                 {
+                    int counter = 1;
                     for (int currentLine = 1; currentLine <= lines.Length; ++currentLine)
                     {
                         if (cardNo == LsVisitors[currentLine-1].CardNo && LsVisitors[currentLine-1].OutTime.Equals(default(DateTime)))
                         {
                             LsVisitors[currentLine - 1].OutTime = DateTime.Now;
                             writer.WriteLine(LsVisitors[currentLine - 1].CardNo + "," + LsVisitors[currentLine - 1].Name + "," + LsVisitors[currentLine - 1].PhNo + "," + LsVisitors[currentLine - 1].Email + "," + LsVisitors[currentLine - 1].Occupation + "," + LsVisitors[currentLine - 1].Gender + "," + LsVisitors[currentLine - 1].InTime + "," + DateTime.Now + "," + LsVisitors[currentLine - 1].Day);
+                            MessageBox.Show("The user has checked out.", "Info!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             txtCardNoOut.Text = "";
                         }
                         else if(cardNo == LsVisitors[currentLine-1].CardNo && !LsVisitors[currentLine - 1].OutTime.Equals(default(DateTime)))
                         {
                             writer.WriteLine(lines[currentLine - 1]);
-                            MessageBox.Show("The user has already checked out.","Error!");
+                            MessageBox.Show("The user has already checked out.","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             txtCardNoOut.Text = "";
+                            return;
                         } else
                         {
                             writer.WriteLine(lines[currentLine - 1]);
+                            if (counter == lines.Length)
+                            {
+                                MessageBox.Show("User not found", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                            }
+                            counter++;
                         }
                     }
                 }
@@ -350,7 +348,7 @@ namespace FCBarcelonaMuseum
             }
             catch (Exception error)
             {
-                MessageBox.Show("Cannot checkout!", "Error!");
+                MessageBox.Show("Cannot checkout!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 

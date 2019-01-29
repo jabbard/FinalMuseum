@@ -30,8 +30,7 @@ namespace FCBarcelonaMuseum
             this.OutTime = outTime;
             this.Day = day;
         }
-    }
 
-     
+    }     
 }
 

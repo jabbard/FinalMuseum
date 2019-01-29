@@ -51,7 +51,7 @@
             // 
             this.dataGridDailyReport.AllowUserToAddRows = false;
             this.dataGridDailyReport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridDailyReport.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.dataGridDailyReport.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(191)))), ((int)(((byte)(191)))));
             this.dataGridDailyReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridDailyReport.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColnCardNo,
@@ -102,6 +102,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(215)))), ((int)(((byte)(216)))));
             this.ClientSize = new System.Drawing.Size(800, 528);
             this.Controls.Add(this.groupBoxDuration);
             this.Controls.Add(this.dataGridDailyReport);

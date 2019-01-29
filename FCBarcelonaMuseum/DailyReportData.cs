@@ -18,7 +18,5 @@ namespace FCBarcelonaMuseum
             this.Name = name;
             this.Duration = duration;
         }
-
-
     }
 }

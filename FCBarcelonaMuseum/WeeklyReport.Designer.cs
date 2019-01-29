@@ -53,7 +53,7 @@
             // 
             this.dataGridViewWeeks.AllowUserToAddRows = false;
             this.dataGridViewWeeks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewWeeks.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.dataGridViewWeeks.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(191)))), ((int)(((byte)(191)))));
             this.dataGridViewWeeks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewWeeks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColnDay,
@@ -103,7 +103,7 @@
             this.chartWeekly.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chartWeekly.Legends.Add(legend1);
-            this.chartWeekly.Location = new System.Drawing.Point(39, 293);
+            this.chartWeekly.Location = new System.Drawing.Point(39, 281);
             this.chartWeekly.Name = "chartWeekly";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
@@ -117,6 +117,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(215)))), ((int)(((byte)(216)))));
             this.ClientSize = new System.Drawing.Size(800, 627);
             this.Controls.Add(this.chartWeekly);
             this.Controls.Add(this.cmbSort);

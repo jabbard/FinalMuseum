@@ -11,8 +11,7 @@ namespace FCBarcelonaMuseum
         public String Day { get; set; }
         public int Total { get; set; }
         public int TotalDuration { get; set; }
-        public WeeklyReportData() { }
-
+        
         public WeeklyReportData(String day, int total, int totalDuration)
         {
             this.Day = day;

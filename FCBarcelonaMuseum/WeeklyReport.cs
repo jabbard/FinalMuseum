@@ -23,7 +23,7 @@ namespace FCBarcelonaMuseum
             chartWeekly.Series["Days"].IsValueShownAsLabel = true;
         }   
  
-        public void LoadToGrid()
+        private void LoadToGrid()
         {
             if (ListReport.Count != 0)
             {
@@ -47,13 +47,13 @@ namespace FCBarcelonaMuseum
             }
             else
             {
-                MessageBox.Show("First pick a date.", "Alert!");
+                MessageBox.Show("First pick a date.", "Alert!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
 
         }
 
-        public void AscendingSort()
+        private void AscendingSort()
         {
             for (int i = 0; i < ListReport.Count; i++)
             {
@@ -63,16 +63,19 @@ namespace FCBarcelonaMuseum
                     {
                         int tempTotal = ListReport[i].Total;
                         String tempDay = ListReport[i].Day;
+                        int tempDuration = ListReport[i].TotalDuration;
                         ListReport[i].Total = ListReport[j].Total;
                         ListReport[i].Day = ListReport[j].Day;
+                        ListReport[i].TotalDuration = ListReport[j].TotalDuration;
                         ListReport[j].Total = tempTotal;
                         ListReport[j].Day = tempDay;
+                        ListReport[j].TotalDuration = tempDuration;
                     }
                 }
             }
         }
 
-        public void DescendingSort()
+        private void DescendingSort()
         {
             for (int i = 0; i < ListReport.Count; i++)
             {
@@ -82,10 +85,13 @@ namespace FCBarcelonaMuseum
                     {
                         int tempTotal = ListReport[i].Total;
                         String tempDay = ListReport[i].Day;
+                        int tempDuration = ListReport[i].TotalDuration;
                         ListReport[i].Total = ListReport[j].Total;
                         ListReport[i].Day = ListReport[j].Day;
+                        ListReport[i].TotalDuration = ListReport[j].TotalDuration;
                         ListReport[j].Total = tempTotal;
                         ListReport[j].Day = tempDay;
+                        ListReport[j].TotalDuration = tempDuration;
                     }
                 }
             }
@@ -93,8 +99,6 @@ namespace FCBarcelonaMuseum
 
         private void MonthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
         {
-
-
             dataGridViewWeeks.Rows.Clear();
             ListReport.Clear();
 
@@ -111,8 +115,7 @@ namespace FCBarcelonaMuseum
                 }
                 int[] count = { 0, 0, 0, 0, 0 };
                 int[] totalDuration = { 0, 0, 0, 0, 0 };
-                int ab = count.Length;
-                int c = 0;
+                
                 while (!reader.EndOfStream)
                 {
                     line = reader.ReadLine();
@@ -192,7 +195,7 @@ namespace FCBarcelonaMuseum
             
         }
 
-        public int Duration(DateTime inTime, DateTime outTime)
+        private int Duration(DateTime inTime, DateTime outTime)
         {
             return (int)Math.Round(outTime.Subtract(inTime).TotalMinutes);
         }
@@ -205,12 +208,14 @@ namespace FCBarcelonaMuseum
                 {
                     AscendingSort();
                     LoadToGrid();
+                    MessageBox.Show("Ascending Order", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 }
                 else
                 {
                     DescendingSort();
                     LoadToGrid();
-                    
+                    MessageBox.Show("Descending Order", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

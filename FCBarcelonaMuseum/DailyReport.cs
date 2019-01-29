@@ -14,6 +14,7 @@ namespace FCBarcelonaMuseum
     public partial class DailyReport : Form
     {
         public List<DailyReportData> Report = new List<DailyReportData>();
+
         public DailyReport()
         {
             InitializeComponent();
@@ -57,7 +58,7 @@ namespace FCBarcelonaMuseum
             TotalDuration();
         }
 
-        public void TotalDuration()
+        private void TotalDuration()
         {
             int total = 0;
             foreach (DailyReportData d in Report)
@@ -67,7 +68,7 @@ namespace FCBarcelonaMuseum
             labelDuration.Text = total.ToString()+" mins";
         }
 
-        public void LoadToGrid()
+        private void LoadToGrid()
         {
             if (Report.Count != 0)
             {
@@ -90,7 +91,7 @@ namespace FCBarcelonaMuseum
             }
         }
 
-        public int Duration(DateTime inTime, DateTime outTime)
+        private int Duration(DateTime inTime, DateTime outTime)
         {
            return (int)Math.Round(outTime.Subtract(inTime).TotalMinutes);
         }

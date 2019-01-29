@@ -259,7 +259,7 @@
             // 
             this.dataGridTable.AllowUserToAddRows = false;
             this.dataGridTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridTable.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.dataGridTable.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(191)))), ((int)(((byte)(191)))));
             this.dataGridTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColnCardNum,
@@ -431,14 +431,14 @@
             // weeklyReportToolStripMenuItem
             // 
             this.weeklyReportToolStripMenuItem.Name = "weeklyReportToolStripMenuItem";
-            this.weeklyReportToolStripMenuItem.Size = new System.Drawing.Size(216, 28);
+            this.weeklyReportToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
             this.weeklyReportToolStripMenuItem.Text = "Weekly Report";
             this.weeklyReportToolStripMenuItem.Click += new System.EventHandler(this.WeeklyReportToolStripMenuItem_Click);
             // 
             // dailyReportToolStripMenuItem
             // 
             this.dailyReportToolStripMenuItem.Name = "dailyReportToolStripMenuItem";
-            this.dailyReportToolStripMenuItem.Size = new System.Drawing.Size(216, 28);
+            this.dailyReportToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
             this.dailyReportToolStripMenuItem.Text = "Daily Report";
             this.dailyReportToolStripMenuItem.Click += new System.EventHandler(this.DailyReportToolStripMenuItem_Click);
             // 
@@ -447,6 +447,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(215)))), ((int)(((byte)(216)))));
             this.ClientSize = new System.Drawing.Size(1558, 725);
             this.Controls.Add(this.grpCheckOut);
             this.Controls.Add(this.groupBox1);
@@ -459,7 +460,6 @@
             this.Name = "HomePage";
             this.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
             this.Text = "Barca Museum";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBoxNewVisitor.ResumeLayout(false);
             this.groupBoxNewVisitor.PerformLayout();
             this.grpGender.ResumeLayout(false);
