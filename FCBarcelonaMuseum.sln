@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCBarcelonaMuseum", "FCBarcelonaMuseum\FCBarcelonaMuseum.csproj", "{63FB02E1-2D03-4DBA-B13F-5D4FD9A43FE3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63FB02E1-2D03-4DBA-B13F-5D4FD9A43FE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63FB02E1-2D03-4DBA-B13F-5D4FD9A43FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63FB02E1-2D03-4DBA-B13F-5D4FD9A43FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63FB02E1-2D03-4DBA-B13F-5D4FD9A43FE3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8CF7C2EE-A335-46EE-BCFB-E75F3579F3D7}
+	EndGlobalSection
+EndGlobal
