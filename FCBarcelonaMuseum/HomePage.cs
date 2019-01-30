@@ -87,9 +87,9 @@ namespace FCBarcelonaMuseum
 
                 }
                 String visitorName;
-                if (String.IsNullOrEmpty(txtName.Text.Trim()) || !rgx.IsMatch(txtName.Text.Trim()))
+                if (String.IsNullOrEmpty(txtName.Text.Trim()) || !name.IsMatch(txtName.Text.Trim()))
                 {
-                    MessageBox.Show("The name field is empty!","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("The name field is empty or incorrect!","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
@@ -97,9 +97,9 @@ namespace FCBarcelonaMuseum
                     visitorName = txtName.Text.Trim();
                 }
                 String email;
-                if (String.IsNullOrEmpty(txtEmail.Text.Trim()) || !name.IsMatch(txtEmail.Text.Trim()))
+                if (String.IsNullOrEmpty(txtEmail.Text.Trim()) || !rgx.IsMatch(txtEmail.Text.Trim()))
                 {
-                    MessageBox.Show("The email field is empty!","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("The email field is empty or incorrect!","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
@@ -151,9 +151,9 @@ namespace FCBarcelonaMuseum
                 //}
 
                 String phNo;
-                if (String.IsNullOrEmpty(txtPhNo.Text.Trim()) || !rx.IsMatch(txtEmail.Text.Trim()))
+                if (String.IsNullOrEmpty(txtPhNo.Text.Trim()) || !rx.IsMatch(txtPhNo.Text.Trim()))
                 {
-                    MessageBox.Show("The name field is empty!","Error!",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("The phone field is empty or incorrect!","Error!",MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
@@ -315,6 +315,7 @@ namespace FCBarcelonaMuseum
                 using (StreamWriter writer = new StreamWriter(@"Data.csv"))
                 {
                     int counter = 1;
+                    
                     for (int currentLine = 1; currentLine <= lines.Length; ++currentLine)
                     {
                         if (cardNo == LsVisitors[currentLine-1].CardNo && LsVisitors[currentLine-1].OutTime.Equals(default(DateTime)))
@@ -327,9 +328,12 @@ namespace FCBarcelonaMuseum
                         else if(cardNo == LsVisitors[currentLine-1].CardNo && !LsVisitors[currentLine - 1].OutTime.Equals(default(DateTime)))
                         {
                             writer.WriteLine(lines[currentLine - 1]);
-                            MessageBox.Show("The user has already checked out.","Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            if(currentLine == lines.Length)
+                            {
+                                MessageBox.Show("The user has already checked out.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                             txtCardNoOut.Text = "";
-                            return;
+                            
                         } else
                         {
                             writer.WriteLine(lines[currentLine - 1]);

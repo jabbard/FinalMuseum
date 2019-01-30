@@ -205,7 +205,9 @@
             "IT Professional ",
             "Accountant",
             "Athlete",
-            "Politician"});
+            "Politician",
+            "Actor",
+            "Other"});
             this.cmbOccupation.Location = new System.Drawing.Point(245, 219);
             this.cmbOccupation.Name = "cmbOccupation";
             this.cmbOccupation.Size = new System.Drawing.Size(280, 34);
